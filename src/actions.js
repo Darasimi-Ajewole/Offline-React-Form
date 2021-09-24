@@ -1,0 +1,4 @@
+export const UPLOAD_FILE = 'UPLOAD_FILE';
+export const MAKE_SUBMISSION = 'MAKE_SUBMISSION';
+export const CREATE_FORM = 'CREATE_FORM';
+export const UPDATE_FORM = 'UPDATE_FORM';
