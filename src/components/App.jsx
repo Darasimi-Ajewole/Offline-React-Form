@@ -1,5 +1,5 @@
-import React from 'react';
 import '../styles/App.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import RegisterForm from './register-form';
 import Animation from './animation';
 import Panel from './panel';
