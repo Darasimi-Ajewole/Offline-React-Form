@@ -8,7 +8,21 @@ const rootReducer = combineReducers({
   orm: createReducer(orm),
 });
 
-const middleware = [offline(offlineConfig), window.__REDUX_DEVTOOLS_EXTENSION__()]
+const effect = (effectData, _action) => {
+  const defaultRequest = offlineConfig.effect
+  const { customRequest } = effectData
+  if (customRequest) return customRequest(effectData)
+  return defaultRequest(effectData)
+}
+
+let middleware = [
+  offline({ ...offlineConfig, effect }),
+]
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+  middleware = [...middleware, window.__REDUX_DEVTOOLS_EXTENSION__()]
+}
+
+
 const store = createStore(rootReducer, undefined, compose(...middleware));
 
 export default store;
