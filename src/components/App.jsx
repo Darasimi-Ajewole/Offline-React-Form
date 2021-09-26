@@ -1,8 +1,8 @@
 import '../styles/App.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import RegisterForm from './register-form';
 import Animation from './animation';
 import Panel from './panel';
+import NotificationPanel from './notification';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <div className="row">
         <Animation />
         <Panel>
+          <NotificationPanel />
           <RegisterForm />
         </Panel>
       </div>
