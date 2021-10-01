@@ -1,20 +1,13 @@
-import '../styles/App.css';
-import RegisterForm from './register-form';
-import Animation from './animation';
-import Panel from './panel';
+import AccountForm from './account-form';
 import NotificationPanel from './notification';
+import '../styles/style.scss';
 
 function App() {
   return (
-    <div className="container register">
-      <div className="row">
-        <Animation />
-        <Panel>
-          <NotificationPanel />
-          <RegisterForm />
-        </Panel>
-      </div>
-    </div>
+    <>
+      <NotificationPanel />
+      <AccountForm />
+    </>
   );
 }
 
