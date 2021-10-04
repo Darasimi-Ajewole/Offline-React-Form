@@ -1,27 +1,19 @@
 import { createStore, compose, combineReducers } from 'redux'
 import { createReducer } from "redux-orm";
 import orm from "./model";
-import { offline } from '@redux-offline/redux-offline';
-import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
+import { offlineMiddleware } from './offline';
 
 const rootReducer = combineReducers({
   orm: createReducer(orm),
 });
 
-const effect = (effectData, _action) => {
-  const defaultRequest = offlineConfig.effect
-  const { customRequest } = effectData
-  if (customRequest) return customRequest(effectData)
-  return defaultRequest(effectData)
-}
+const __DEV__ = process.env.NODE_ENV !== 'production';
 
-let middleware = [
-  offline({ ...offlineConfig, effect }),
-]
-if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+let middleware = [offlineMiddleware]
+
+if (window.__REDUX_DEVTOOLS_EXTENSION__ && __DEV__) {
   middleware = [...middleware, window.__REDUX_DEVTOOLS_EXTENSION__()]
 }
-
 
 const store = createStore(rootReducer, undefined, compose(...middleware));
 
