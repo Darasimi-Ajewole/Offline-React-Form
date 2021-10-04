@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { getPendingResponseCount } from '../model';
+import { getPendingResponseCount } from '../model/response';
 import { useSelector } from 'react-redux'
 import { useEffect, useCallback, useRef } from 'react';
 
