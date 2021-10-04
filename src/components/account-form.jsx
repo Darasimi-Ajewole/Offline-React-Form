@@ -1,10 +1,15 @@
 import Input from './input';
-import DisplayPic from './display.pic';
+import DisplayPic from './display-pic';
 import { useEffect, useCallback, } from 'react';
-import { CREATE_RESPONSE, UPDATE_RESPONSE, RECORD_RESPONSE, submitResponseAction } from '../actions';
+
 import { useDispatch, useSelector } from 'react-redux'
-import { getResponse } from '../model';
+import { getResponse } from '../model/response';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  CREATE_RESPONSE, UPDATE_RESPONSE,
+  RECORD_RESPONSE,
+  submitResponseAction
+} from '../actions/response';
 
 
 
@@ -63,9 +68,9 @@ const FormUI = ({ response, handleChange, handleSubmit }) => (
     <div id="wizard">
 
       <section>
-        <div class="form-header">
-          <DisplayPic />
-          <div class="form-group">
+        <div className="form-header">
+          <DisplayPic responseId={response.id} data={response.displayPic} />
+          <div className="form-group">
             <Input value={response.firstName} type="text" name="firstName" onChange={handleChange} placeholder="First Name" />
             <Input value={response.lastName} type="text" name="lastName" onChange={handleChange} placeholder="Last Name" />
             <Input value={response.email} placeholder="Email Address" type="email" name="email" onChange={handleChange} />
