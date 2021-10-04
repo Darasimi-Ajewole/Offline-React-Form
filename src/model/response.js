@@ -1,13 +1,15 @@
-import { Model, ORM } from "redux-orm";
+import { Model, attr, oneToOne, createSelector } from "redux-orm";
 import {
   CREATE_RESPONSE, UPDATE_RESPONSE,
   RESPONSE_SUBMITTED, RECORD_RESPONSE,
-} from "./actions";
-import { createSelector } from 'redux-orm';
-import { JS_ERROR } from '@redux-offline/redux-offline/lib/constants';
+} from "../actions/response";
 import { toast } from 'react-toastify';
+import { JS_ERROR } from '@redux-offline/redux-offline/lib/constants';
+import orm from ".";
+import FileModel from "./fileupload";
 
-export class Response extends Model {
+
+export class ResponseModel extends Model {
   static reducer(action, Response) {
     let response;
     switch (action.type) {
@@ -17,7 +19,7 @@ export class Response extends Model {
 
       case UPDATE_RESPONSE:
         response = Response.withId(action.payload.id);
-        response.update(action.payload);
+        response.update({ ...action.payload, modified: new Date() });
         break;
 
       case RECORD_RESPONSE:
@@ -38,21 +40,31 @@ export class Response extends Model {
       case JS_ERROR:
         console.error(action?.meta?.error)
         break
+
       default:
         break
     }
   }
 }
 
-Response.modelName = 'Response';
+ResponseModel.fields = {
+  id: attr(),
+  firstName: attr(),
+  lastName: attr(),
+  email: attr(),
+  dob: attr(),
+  phone: attr(),
+  created: attr({ getDefault: () => new Date() }),
+  modified: attr(),
+  displayPic: oneToOne(FileModel, 'response'),
+}
+ResponseModel.modelName = 'Response';
 
-const orm = new ORM({
-  stateSelector: state => state.orm,
-});
-orm.register(Response);
+orm.register(ResponseModel);
 
-export default orm
 export const getResponse = createSelector(orm.Response);
 export const getPendingResponseCount = createSelector([orm], (session) =>
   session.Response.all().filter(response => response.recorded && !response.submitted).count()
 )
+
+export default ResponseModel

@@ -1,4 +1,4 @@
-import submitRequest from "./utils/submit";
+import submitRequest from "../utils/submit";
 import { toast } from 'react-toastify';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const CREATE_RESPONSE = 'CREATE_RESPONSE';
@@ -7,7 +7,7 @@ export const RECORD_RESPONSE = 'RECORD_RESPONSE';
 export const SUBMIT_RESPONSE = 'SUBMIT_RESPONSE';
 export const RESPONSE_SUBMITTED = 'RESPONSE_SUBMITTED';
 export const FAILED_SUBMISSION = 'FAILED_SUBMISSION';
-
+export const DELETE_RESPONSE = 'DELETE_RESPONSE';
 
 export const submitResponseAction = (response, online = true) => {
   const toastMsg = online ? 'Submitting Response' : 'Response Recorded'
