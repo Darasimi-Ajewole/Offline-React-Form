@@ -34,7 +34,7 @@ FileModel.fields = {
   id: attr(),
   created: attr({ getDefault: () => new Date() }),
   modified: attr(),
-  url: attr(),
+  uploadData: attr(), // data about file stored in remote storage
   file: attr(),
 }
 

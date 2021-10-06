@@ -1,6 +1,7 @@
-import { createStore, compose, combineReducers } from 'redux'
+import { createStore, compose, combineReducers, applyMiddleware } from 'redux'
 import { createReducer } from "redux-orm";
 import orm from "./model";
+import thunk from 'redux-thunk';
 import { offlineMiddleware } from './offline';
 
 const rootReducer = combineReducers({
@@ -8,8 +9,7 @@ const rootReducer = combineReducers({
 });
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
-
-let middleware = [offlineMiddleware]
+let middleware = [applyMiddleware(thunk), offlineMiddleware]
 
 if (window.__REDUX_DEVTOOLS_EXTENSION__ && __DEV__) {
   middleware = [...middleware, window.__REDUX_DEVTOOLS_EXTENSION__()]

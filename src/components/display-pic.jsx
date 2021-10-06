@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react'
 import { createFileUploadAction } from "../actions/fileupload";
 import { v4 as uuidv4 } from 'uuid';
 
-// import { getFile } from "../model/fileupload"
-
 import localforage from 'localforage';
 
-// responseId, fileId,
-// multiple file changes
+// TODO: Do this following below
+// Multiple file changes
 // offline persistence
 // clearing out unneeded blob
 // clean up unneeded blob as soon as file is uploaded
-
+// see the possibility of passing imageBlob to Display PIc, or pass a blob url
+// On file submit offline, check if online activation the dispatch of file to upload occur correctly before submitting
 const DisplayPic = ({ responseId, data }) => {
   const dispatch = useDispatch()
   const [localUrl, setLocalUrl] = useState()
@@ -30,15 +29,14 @@ const DisplayPic = ({ responseId, data }) => {
     loadLocalImage(data)
   }, [data])
 
-  const handleFile = async (imageBlob) => {
-    // if (id) return
-    const imageId = uuidv4()
-    await localforage.setItem(imageId, imageBlob)
-    dispatch(createFileUploadAction(imageId, responseId))
+  const handleFile = (imageBlob) => {
+    const imageId = data?.id || uuidv4()
+    dispatch(createFileUploadAction(imageId, imageBlob, responseId))
 
   }
 
   return (
+    // TODO: Set a biunduary on image plus frame
     <div className="avartar">
       <a href="#head">
         <img src={localUrl} alt="" />
@@ -51,6 +49,7 @@ const DisplayPic = ({ responseId, data }) => {
 }
 
 const FilePicker = ({ handleFile }) => (
+  // disable this when a file is getting uploaded
   <div className="avartar-picker">
     <input
       type="file"
