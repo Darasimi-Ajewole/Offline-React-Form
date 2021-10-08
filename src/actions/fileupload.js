@@ -4,7 +4,7 @@ export const CREATE_FILE = 'CREATE_FILE';
 export const UPDATE_FILE = 'UPDATE_FILE';
 export const DELETE_FILE = 'DELETE_FILE';
 
-export const createFileUploadAction = (fileId, fileBlob, responseId) => async (dispatch) => {
+export const createFileUploadAction = (fileId, fileBlob, responseId) => async (dispatch, getState) => {
   await localforage.setItem(fileId, fileBlob)
 
   dispatch({
@@ -15,7 +15,8 @@ export const createFileUploadAction = (fileId, fileBlob, responseId) => async (d
     }
   })
 
-  dispatch(uploadFileAction(fileId, fileBlob))
+  const online = getState().offline.online
+  if (online) dispatch(uploadFileAction(fileId, fileBlob))
 }
 
 export const uploadFileAction = (fileId, fileBlob) => async (dispatch) => {
