@@ -70,6 +70,17 @@ select {
     display: none;
   }
 }
+#image-container {
+  width: 146px;
+  height: 146px;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 125px;
+  -webkit-border-radius: 125px;
+  -moz-border-radius: 125px;
+}
 img {
   max-width: 100%;
   vertical-align: middle;
@@ -427,6 +438,10 @@ body {
       width: 100%;
       text-align: center;
       margin-bottom: 25px;
+    }
+    #image-container {
+      margin-left: auto;
+      margin-right: auto;
     }
     .form-group {
       width: 100%;

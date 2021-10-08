@@ -1,20 +1,18 @@
-import avatar from '../images/avartar.png'
-import { useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { createFileUploadAction } from "../actions/fileupload";
-import { v4 as uuidv4 } from 'uuid';
-
+import React from "react";
 import localforage from 'localforage';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 
-// TODO: Do this following below
-// Multiple file changes
-// offline persistence
-// clearing out unneeded blob
-// clean up unneeded blob as soon as file is uploaded
-// see the possibility of passing imageBlob to Display PIc, or pass a blob url
-// On file submit offline, check if online activation the dispatch of file to upload occur correctly before submitting
-const DisplayPic = ({ responseId, data }) => {
+import avatar from '../images/avartar.png'
+import { createFileUploadAction } from "../actions/fileupload";
+import { getFile } from '../model/fileupload';
+
+
+const DisplayPic = ({ responseId, imageId }) => {
   const dispatch = useDispatch()
+  const data = useSelector((state) => getFile(state, imageId))
+
   const [localUrl, setLocalUrl] = useState()
 
   useEffect(() => {
@@ -36,10 +34,9 @@ const DisplayPic = ({ responseId, data }) => {
   }
 
   return (
-    // TODO: Set a biunduary on image plus frame
     <div className="avartar">
       <a href="#head">
-        <img src={localUrl} alt="" />
+        <div id="image-container" style={{ backgroundImage: `url(${localUrl})` }} />
       </a>
       <FilePicker
         handleFile={(file) => handleFile(file)}
@@ -47,6 +44,11 @@ const DisplayPic = ({ responseId, data }) => {
     </div>
   )
 }
+
+DisplayPic.defaultProps = {
+  imageId: null,
+}
+
 
 const FilePicker = ({ handleFile }) => (
   // disable this when a file is getting uploaded
@@ -56,6 +58,7 @@ const FilePicker = ({ handleFile }) => (
       name="displayPicture"
       id="file-1"
       className="inputfile"
+      accept="image/*"
       onChange={(e) => handleFile(e.target.files[0])}
     />
     <label htmlFor="file-1">
@@ -65,4 +68,4 @@ const FilePicker = ({ handleFile }) => (
   </div>
 
 )
-export default DisplayPic
+export default React.memo(DisplayPic)
