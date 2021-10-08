@@ -1,5 +1,5 @@
 import { CREATE_FILE, UPDATE_FILE, DELETE_FILE } from "../actions/fileupload";
-import { Model, attr } from "redux-orm";
+import { Model, attr, createSelector } from "redux-orm";
 import orm from ".";
 
 export class FileModel extends Model {
@@ -7,15 +7,16 @@ export class FileModel extends Model {
     let file, response;
     switch (action.type) {
       case CREATE_FILE:
-        file = File.create(action.payload);
+        const { id } = action.payload
+        file = File.create({ id });
         const { Response } = session
         response = Response.withId(action.payload.responseId)
-        response.displayPic = file.ref
+        response.displayPic = file
         break;
 
       case UPDATE_FILE:
         file = File.withId(action.payload.id);
-        file.update(action.payload);
+        file.update({ ...action.payload, modified: new Date() });
         break;
 
       case DELETE_FILE:
@@ -35,12 +36,11 @@ FileModel.fields = {
   created: attr({ getDefault: () => new Date() }),
   modified: attr(),
   uploadData: attr(), // data about file stored in remote storage
-  file: attr(),
 }
 
 orm.register(FileModel)
 
-// export const getFile = createSelector(orm.FileModel);
+export const getFile = createSelector(orm.FileModel);
 
 
 export default FileModel

@@ -12,7 +12,7 @@ import {
 } from '../actions/response';
 
 
-
+// TODO: Modify conv or image scraper to receive the json instead of json placeholder ,also modifiy file to have correct id
 const FormContainer = ({ responseId }) => {
   const dispatch = useDispatch()
   const response = useSelector((state) => getResponse(state, responseId))
@@ -69,7 +69,7 @@ const FormUI = ({ response, handleChange, handleSubmit }) => (
 
       <section>
         <div className="form-header">
-          <DisplayPic responseId={response.id} data={response.displayPic} />
+          <DisplayPic responseId={response.id} imageId={response.displayPic} />
           <div className="form-group">
             <Input value={response.firstName} type="text" name="firstName" onChange={handleChange} placeholder="First Name" />
             <Input value={response.lastName} type="text" name="lastName" onChange={handleChange} placeholder="Last Name" />
