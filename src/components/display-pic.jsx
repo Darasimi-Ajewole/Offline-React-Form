@@ -38,9 +38,7 @@ const DisplayPic = ({ responseId, imageId }) => {
       <a href="#head">
         <div id="image-container" style={{ backgroundImage: `url(${localUrl})` }} />
       </a>
-      <FilePicker
-        handleFile={(file) => handleFile(file)}
-      />
+      <FilePicker handleFile={(file) => handleFile(file)} />
     </div>
   )
 }
