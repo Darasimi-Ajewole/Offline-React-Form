@@ -16,6 +16,7 @@ const Input = ({ value, name, type, placeholder, onChange }) => {
         onChange={(e) => onChange(name, e.target.value)}
         onFocus={() => toggleActive(true)}
         onBlur={() => toggleActive(false)}
+        required={true}
       />
     </div>
   )
