@@ -1,7 +1,7 @@
 import { Model, attr, oneToOne, createSelector } from "redux-orm";
 import {
   CREATE_RESPONSE, UPDATE_RESPONSE,
-  RESPONSE_SUBMITTED, RECORD_RESPONSE,
+  RESPONSE_SUBMITTED, RECORD_RESPONSE, FAILED_SUBMISSION,
 } from "../actions/response";
 import { toast } from 'react-toastify';
 import { JS_ERROR } from '@redux-offline/redux-offline/lib/constants';
@@ -37,6 +37,12 @@ export class ResponseModel extends Model {
         response.update({ submitted: new Date() });
         break
 
+      case FAILED_SUBMISSION:
+        response = Response.withId(action.meta.id);
+        toast.error(`Oops, Something went wrong with submitting response saved at ${response.recorded} `, { autoClose: 7000 })
+        response.update({ failed: new Date() });
+        break
+
       case JS_ERROR:
         console.error(action?.meta?.error)
         break
@@ -56,6 +62,9 @@ ResponseModel.fields = {
   phone: attr(),
   created: attr({ getDefault: () => new Date() }),
   modified: attr(),
+  recorded: attr(),
+  submitted: attr(),
+  failed: attr(),
   displayPic: oneToOne(FileModel, 'response'),
 }
 ResponseModel.modelName = 'Response';
@@ -65,6 +74,10 @@ orm.register(ResponseModel);
 export const getResponse = createSelector(orm.Response);
 export const getPendingResponseCount = createSelector([orm], (session) =>
   session.Response.all().filter(response => response.recorded && !response.submitted).count()
+)
+
+export const getFailedResponses = createSelector([orm], (session) =>
+  session.Response.all().filter(response => response.recorded && response.failed)
 )
 
 export default ResponseModel

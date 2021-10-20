@@ -3,6 +3,7 @@ import { uploadFileAction } from "./fileupload";
 import { toast } from 'react-toastify';
 import localforage from 'localforage';
 import { getFile } from "../model/fileupload";
+import { getFailedResponses } from "../model/response";
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const CREATE_RESPONSE = 'CREATE_RESPONSE';
 export const UPDATE_RESPONSE = 'UPDATE_RESPONSE';
@@ -14,8 +15,9 @@ export const DELETE_RESPONSE = 'DELETE_RESPONSE';
 
 export const submitResponseAction = (response, online = true) => async (dispatch, getState) => {
   const customRequest = async ({ url, json }) => {
+    // move this code to some custom action for file
     const displayPic = getFile(getState(), response.displayPic)
-    if (displayPic) {
+    if (displayPic.id) {
       const uploaded = Boolean(displayPic.uploadData)
       if (!uploaded) {
         const displayPicBlob = await localforage.getItem(displayPic.id)
@@ -26,7 +28,7 @@ export const submitResponseAction = (response, online = true) => async (dispatch
     return await submitRequest({ url, json })
   }
 
-  const toastMsg = online ? 'Submitting Response' : 'Response Recorded' // modify the loader of this to match upload progress
+  const toastMsg = online ? 'Submitting Response' : 'Response Recorded'
   toast.info(toastMsg)
   dispatch({
     type: SUBMIT_RESPONSE,
@@ -41,4 +43,13 @@ export const submitResponseAction = (response, online = true) => async (dispatch
       }
     }
   })
+}
+
+export const retryFailedResponses = () => (dispatch, getState) => {
+  const state = getState()
+  const failedResponses = getFailedResponses(state).toRefArray()
+  const online = state.offline.online
+  if (!online) return
+
+  failedResponses.forEach((response) => dispatch(submitResponseAction(response, online)))
 }

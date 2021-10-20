@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { getPendingResponseCount } from '../model/response';
 import { useSelector } from 'react-redux'
 import { useEffect, useCallback, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { retryFailedResponses } from '../actions/response'
 
 const NotificationPanel = () => {
   return (
@@ -15,6 +17,8 @@ const NotificationPanel = () => {
 
 const PendingResponsePanel = () => {
   const toastId = useRef(null);
+  const dispatch = useDispatch()
+
   const pendingResponseCount = useSelector((state) => getPendingResponseCount(state))
 
   const dismiss = () => toast.dismiss(toastId.current);
@@ -42,6 +46,9 @@ const PendingResponsePanel = () => {
     else notify()
   }, [pendingResponseCount, notify])
 
+  useEffect(() => {
+    dispatch(retryFailedResponses())
+  }, [dispatch])
 
   return null;
 }
