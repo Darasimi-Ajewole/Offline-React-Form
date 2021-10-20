@@ -34,7 +34,7 @@ export class ResponseModel extends Model {
       case RESPONSE_SUBMITTED:
         response = Response.withId(action.meta.id);
         toast.info(`Response saved at ${response.recorded} submitted successfully`)
-        response.update({ submitted: new Date() });
+        response.update({ submitted: new Date(), failed: null });
         break
 
       case FAILED_SUBMISSION:
