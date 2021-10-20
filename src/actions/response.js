@@ -1,5 +1,5 @@
 import submitRequest from "../utils/submit";
-import { uploadFileAction } from "./fileupload";
+import { uploadPendingFileAction } from "./fileupload";
 import { toast } from 'react-toastify';
 import localforage from 'localforage';
 import { getFile } from "../model/fileupload";
@@ -15,14 +15,9 @@ export const DELETE_RESPONSE = 'DELETE_RESPONSE';
 
 export const submitResponseAction = (response, online = true) => async (dispatch, getState) => {
   const customRequest = async ({ url, json }) => {
-    // move this code to some custom action for file
-    const displayPic = getFile(getState(), response.displayPic)
-    if (displayPic.id) {
-      const uploaded = Boolean(displayPic.uploadData)
-      if (!uploaded) {
-        const displayPicBlob = await localforage.getItem(displayPic.id)
-        await dispatch(uploadFileAction(displayPic.id, displayPicBlob))
-      }
+    if (response.displayPic) {
+      const displayPic = getFile(getState(), response.displayPic)
+      await dispatch(uploadPendingFileAction(displayPic))
       localforage.removeItem(displayPic.id)
     }
     return await submitRequest({ url, json })
@@ -50,6 +45,5 @@ export const retryFailedResponses = () => (dispatch, getState) => {
   const failedResponses = getFailedResponses(state).toRefArray()
   const online = state.offline.online
   if (!online) return
-
   failedResponses.forEach((response) => dispatch(submitResponseAction(response, online)))
 }

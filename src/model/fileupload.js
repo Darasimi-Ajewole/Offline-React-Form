@@ -35,7 +35,9 @@ FileModel.fields = {
   id: attr(),
   created: attr({ getDefault: () => new Date() }),
   modified: attr(),
+  fileModified: attr(),
   uploadData: attr(), // data about file stored in remote storage
+  uploading: attr({ getDefault: () => false }),
 }
 
 orm.register(FileModel)

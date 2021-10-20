@@ -1,36 +1,34 @@
 import React from "react";
 import localforage from 'localforage';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 import avatar from '../images/avartar.png'
-import { createFileUploadAction } from "../actions/fileupload";
+import { createFileUploadAction, updateFileAction } from "../actions/fileupload";
 import { getFile } from '../model/fileupload';
 
 
 const DisplayPic = ({ responseId, imageId }) => {
   const dispatch = useDispatch()
-  const data = useSelector((state) => getFile(state, imageId))
+  const data = useSelector((state) => getFile(state, imageId) || {})
 
   const [localUrl, setLocalUrl] = useState()
 
   useEffect(() => {
-    const loadLocalImage = async () => {
-      if (!data) setLocalUrl(avatar)
-      else if (data) { // persisted image
-        const imageBlob = await localforage.getItem(data.id)
+    const loadLocalImage = async (imageId) => {
+      if (!imageId) setLocalUrl(avatar)
+      else { // persisted image
+        const imageBlob = await localforage.getItem(imageId)
         const url = URL.createObjectURL(imageBlob)
         setLocalUrl(url)
       }
     }
-    loadLocalImage(data)
-  }, [data])
+    loadLocalImage(data.id)
+  }, [data.id, data.fileModified])
 
   const handleFile = (imageBlob) => {
-    const imageId = data?.id || uuidv4()
-    dispatch(createFileUploadAction(imageId, imageBlob, responseId))
-
+    if (data?.id) dispatch(updateFileAction(data.id, imageBlob))
+    else dispatch(createFileUploadAction(imageBlob, responseId))
   }
 
   return (
@@ -38,7 +36,7 @@ const DisplayPic = ({ responseId, imageId }) => {
       <a href="#head">
         <div id="image-container" style={{ backgroundImage: `url(${localUrl})` }} />
       </a>
-      <FilePicker handleFile={(file) => handleFile(file)} />
+      {!data?.uploading && <FilePicker handleFile={(file) => handleFile(file)} />}
     </div>
   )
 }

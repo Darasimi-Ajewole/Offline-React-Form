@@ -16,21 +16,22 @@ export const startUploadSession = async (file) => {
   return { sessionData: data, status };
 }
 
-export const upload2Storage = async (uploadUrl, file) => {
+export const upload2Storage = async (uploadUrl, file, requestConfig = {}) => {
   const response = await axios({
     method: 'put',
     url: uploadUrl,
     headers: { 'Content-Type': file.type },
     data: file,
+    ...requestConfig
   })
 
   return response
 }
 
-const uploadFile = async (file) => {
+const uploadFile = async (file, requestConfig = {}) => {
   const { sessionData } = await startUploadSession(file);
   const { upload_url: uploadUrl, blob_name: blobName } = sessionData;
-  const uploadResponse = await upload2Storage(uploadUrl, file);
+  const uploadResponse = await upload2Storage(uploadUrl, file, requestConfig);
 
   return uploadResponse && { blobName }
 }
