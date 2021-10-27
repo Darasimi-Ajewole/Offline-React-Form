@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const DEV_API_ROOT = 'http://localhost:8080/public'
-// const PROD_API_ROOT = 'https://default-xwijo2rjaa-uc.a.run.app/public'
-const START_UPLOAD_URL = `${DEV_API_ROOT}/start-upload` // TODO: Change this to remove url
+const API_ROOT = 'https://default-xwijo2rjaa-uc.a.run.app/public'
+const START_UPLOAD_URL = `${API_ROOT}/start-upload`
 
 export const startUploadSession = async (file) => {
   let data, status, response
