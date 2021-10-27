@@ -47,7 +47,6 @@ DisplayPic.defaultProps = {
 
 
 const FilePicker = ({ handleFile }) => (
-  // disable this when a file is getting uploaded
   <div className="avartar-picker">
     <input
       type="file"
