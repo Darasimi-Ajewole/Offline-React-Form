@@ -12,7 +12,6 @@ import {
 } from '../actions/response';
 
 
-// TODO: Modify conv or image scraper to receive the json instead of json placeholder ,also modifiy file to have correct id
 const FormContainer = ({ responseId }) => {
   const dispatch = useDispatch()
   const response = useSelector((state) => getResponse(state, responseId))
