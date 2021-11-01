@@ -12,7 +12,7 @@ const DisplayPic = ({ responseId, imageId }) => {
   const dispatch = useDispatch()
   const data = useSelector((state) => getFile(state, imageId) || {})
 
-  const [localUrl, setLocalUrl] = useState()
+  const [localUrl, setLocalUrl] = useState(avatar)
 
   useEffect(() => {
     const loadLocalImage = async (imageId) => {
