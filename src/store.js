@@ -9,7 +9,13 @@ const rootReducer = combineReducers({
 });
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
-let middleware = [applyMiddleware(thunk), offlineMiddleware]
+const __TEST__ = process.env.NODE_ENV === 'test';
+
+let middleware = [applyMiddleware(thunk)]
+
+if (!__TEST__) {
+  middleware = [...middleware, offlineMiddleware]
+}
 
 if (window.__REDUX_DEVTOOLS_EXTENSION__ && __DEV__) {
   middleware = [...middleware, window.__REDUX_DEVTOOLS_EXTENSION__()]

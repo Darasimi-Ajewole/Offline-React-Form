@@ -34,7 +34,7 @@ const DisplayPic = ({ responseId, imageId }) => {
   return (
     <div className="avartar">
       <a href="#head">
-        <div id="image-container" style={{ backgroundImage: `url(${localUrl})` }} />
+        <div id="image-container" style={{ backgroundImage: `url(${localUrl})` }} title="display-picture" />
       </a>
       {!data?.uploading && <FilePicker handleFile={(file) => handleFile(file)} />}
     </div>
