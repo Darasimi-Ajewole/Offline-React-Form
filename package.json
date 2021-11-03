@@ -4,16 +4,14 @@
   "private": true,
   "dependencies": {
     "@redux-offline/redux-offline": "^2.6.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
     "classnames": "^2.3.1",
     "localforage": "^1.10.0",
     "material-design-iconic-font": "^2.2.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-redux": "^7.2.5",
     "react-scripts": "4.0.3",
     "react-toastify": "^8.0.2",
@@ -38,7 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --setupFiles ./src/test/setupTests.js",
+    "test": "react-scripts test --setupFilesAfterEnv ./src/test/setupTests.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,6 +59,8 @@
   },
   "devDependencies": {
     "remote-redux-devtools": "^0.5.16",
-    "sass": "^1.42.1"
+    "sass": "^1.42.1",
+    "@testing-library/jest-dom": "5.14.1",
+    "@testing-library/react": "11.2.7"
   }
 }
