@@ -9,7 +9,7 @@ import {
   CREATE_RESPONSE, UPDATE_RESPONSE,
   RECORD_RESPONSE,
   submitResponseAction
-} from '../actions/response';
+} from '../actions';
 
 
 const FormContainer = ({ responseId }) => {

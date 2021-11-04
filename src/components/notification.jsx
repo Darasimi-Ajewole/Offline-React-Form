@@ -4,7 +4,7 @@ import { getPendingResponseCount } from '../model/response';
 import { useSelector } from 'react-redux'
 import { useEffect, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { retryFailedResponses } from '../actions/response'
+import { retryFailedResponses } from '../actionCreators/response'
 
 const NotificationPanel = () => {
   return (

@@ -1,10 +1,7 @@
 import localforage from 'localforage';
 import uploadFile from '../utils/upload';
 import { v4 as uuidv4 } from 'uuid';
-
-export const CREATE_FILE = 'CREATE_FILE';
-export const UPDATE_FILE = 'UPDATE_FILE';
-export const DELETE_FILE = 'DELETE_FILE';
+import { CREATE_FILE, UPDATE_FILE } from '../actions';
 
 export const createFileUploadAction = (fileBlob, responseId) => async (dispatch, getState) => {
   const fileId = uuidv4()

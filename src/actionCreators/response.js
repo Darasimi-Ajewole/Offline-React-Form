@@ -4,14 +4,7 @@ import { toast } from 'react-toastify';
 import localforage from 'localforage';
 import { getFile } from "../model/fileupload";
 import { getFailedResponses } from "../model/response";
-export const UPLOAD_FILE = 'UPLOAD_FILE';
-export const CREATE_RESPONSE = 'CREATE_RESPONSE';
-export const UPDATE_RESPONSE = 'UPDATE_RESPONSE';
-export const RECORD_RESPONSE = 'RECORD_RESPONSE';
-export const SUBMIT_RESPONSE = 'SUBMIT_RESPONSE';
-export const RESPONSE_SUBMITTED = 'RESPONSE_SUBMITTED';
-export const FAILED_SUBMISSION = 'FAILED_SUBMISSION';
-export const DELETE_RESPONSE = 'DELETE_RESPONSE';
+import { SUBMIT_RESPONSE, RESPONSE_SUBMITTED, FAILED_SUBMISSION } from "../actions";
 
 export const submitResponseAction = (response, online = true) => async (dispatch, getState) => {
   const customRequest = async ({ url, json }) => {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 import avatar from '../images/avartar.png'
-import { createFileUploadAction, updateFileAction } from "../actions/fileupload";
+import { createFileUploadAction, updateFileAction } from "../actionCreators/fileupload";
 import { getFile } from '../model/fileupload';
 
 

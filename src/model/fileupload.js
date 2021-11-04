@@ -1,4 +1,4 @@
-import { CREATE_FILE, UPDATE_FILE, DELETE_FILE } from "../actions/fileupload";
+import { CREATE_FILE, UPDATE_FILE, DELETE_FILE } from "../actions";
 import { Model, attr, createSelector } from "redux-orm";
 import orm from ".";
 

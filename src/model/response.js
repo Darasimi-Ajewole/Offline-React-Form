@@ -2,7 +2,7 @@ import { Model, attr, oneToOne, createSelector } from "redux-orm";
 import {
   CREATE_RESPONSE, UPDATE_RESPONSE,
   RESPONSE_SUBMITTED, RECORD_RESPONSE, FAILED_SUBMISSION,
-} from "../actions/response";
+} from "../actions";
 import { toast } from 'react-toastify';
 import { JS_ERROR } from '@redux-offline/redux-offline/lib/constants';
 import orm from ".";
