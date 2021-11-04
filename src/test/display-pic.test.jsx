@@ -1,14 +1,14 @@
 import { screen, waitFor } from '@testing-library/react'
-import { createFileUploadAction, updateFileAction } from "../actions/fileupload";
+import { createFileUploadAction, updateFileAction } from "../actionCreators/fileupload";
 import DisplayPic from '../components/display-pic';
-import { CREATE_RESPONSE } from "../actions/response";
-import { CREATE_FILE, UPDATE_FILE } from "../actions/fileupload";
+import { CREATE_RESPONSE } from "../actions";
+import { CREATE_FILE, UPDATE_FILE } from "../actions";
 import { render } from './test-utils';
 import userEvent from '@testing-library/user-event';
 import store from '../store';
 
-jest.mock('../actions/fileupload', () => {
-  const originalModule = jest.requireActual('../actions/fileupload');
+jest.mock('../actionCreators/fileupload', () => {
+  const originalModule = jest.requireActual('../actionCreators/fileupload');
   return {
     __esModule: true,
     ...originalModule,
