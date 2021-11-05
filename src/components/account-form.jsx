@@ -8,8 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   CREATE_RESPONSE, UPDATE_RESPONSE,
   RECORD_RESPONSE,
-  submitResponseAction
 } from '../actions';
+import { submitResponseAction } from '../actionCreators/response';
 
 
 const FormContainer = ({ responseId }) => {
@@ -17,7 +17,7 @@ const FormContainer = ({ responseId }) => {
   const response = useSelector((state) => getResponse(state, responseId))
   const online = useSelector((state) => state.offline.online)
 
-  useEffect(() => {
+  useEffect(() => { // Creates a new response
     if (response) return
     dispatch({ type: CREATE_RESPONSE, payload: { id: responseId } })
   }, [response, responseId, dispatch])
@@ -56,14 +56,14 @@ const FormContainer = ({ responseId }) => {
   )
 }
 
-const newResponseId = 'latest'
+export const newResponseId = 'latest'
 
 FormContainer.defaultProps = {
   responseId: newResponseId,
 }
 
 const FormUI = ({ response, handleChange, handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit} name="accountForm">
     <div id="wizard">
 
       <section>

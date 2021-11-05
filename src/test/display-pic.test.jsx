@@ -5,7 +5,7 @@ import { CREATE_RESPONSE } from "../actions";
 import { CREATE_FILE, UPDATE_FILE } from "../actions";
 import { render } from './test-utils';
 import userEvent from '@testing-library/user-event';
-import store from '../store';
+import { createTestStore } from '../store';
 
 jest.mock('../actionCreators/fileupload', () => {
   const originalModule = jest.requireActual('../actionCreators/fileupload');
@@ -18,15 +18,17 @@ jest.mock('../actionCreators/fileupload', () => {
 });
 
 test('renders Display Picture component', () => {
-  render(<DisplayPic responseId='funny' imageId='response' />);
+  const store = createTestStore()
+  render(<DisplayPic responseId='funny' imageId='response' />, store);
   expect(screen.getByText('Choose Picture')).toBeVisible()
   expect(screen.getByTitle('display-picture')).toHaveAttribute('style', 'background-image: url(avartar.png);')
 });
 
 test('first Image upload dispatches correct action', () => {
+  const store = createTestStore()
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
   createFileUploadAction.mockReturnValue({ type: 'TEST ACTION' })
-  render(<DisplayPic responseId='funny' imageId='response' />);
+  render(<DisplayPic responseId='funny' imageId='response' />, store);
   const input = screen.getByLabelText(/choose picture/i)
   userEvent.upload(input, file)
 
@@ -39,7 +41,9 @@ test('first Image upload dispatches correct action', () => {
 const imgUrl = 'blob:https://offline-react-form.web.app/'
 
 describe('Actions after first Image upload', () => {
+  let store
   beforeEach(() => {
+    store = createTestStore()
     store.dispatch({ type: CREATE_RESPONSE, payload: { id: 'WittyResponse' } });
     store.dispatch({ type: CREATE_FILE, payload: { id: 'lovelyImage', responseId: 'WittyResponse' } })
     window.URL.createObjectURL.mockReturnValue(imgUrl)
@@ -49,13 +53,13 @@ describe('Actions after first Image upload', () => {
   })
 
   it('Previously added image displays between page reload', async () => {
-    render(<DisplayPic responseId='WittyResponse' imageId='lovelyImage' />);
+    render(<DisplayPic responseId='WittyResponse' imageId='lovelyImage' />, store);
     await waitFor(() => expect(window.URL.createObjectURL).toHaveBeenCalled())
     expect(screen.getByTitle('display-picture')).toHaveAttribute('style', `background-image: url(${imgUrl});`)
   })
 
   it('Subsequent Image upload dispatches correct action', async () => {
-    render(<DisplayPic responseId='WittyResponse' imageId='lovelyImage' />);
+    render(<DisplayPic responseId='WittyResponse' imageId='lovelyImage' />, store);
     await waitFor(() => expect(window.URL.createObjectURL).toHaveBeenCalled())
 
     updateFileAction.mockReturnValue({ type: 'TEST ACTION' })
@@ -66,7 +70,7 @@ describe('Actions after first Image upload', () => {
   })
 
   it('Choose Picture button is hidden while image is being uploaded', async () => {
-    render(<DisplayPic responseId='WittyResponse' imageId='lovelyImage' />);
+    render(<DisplayPic responseId='WittyResponse' imageId='lovelyImage' />, store);
     await waitFor(() => expect(window.URL.createObjectURL).toHaveBeenCalled())
     expect(screen.getByText('Choose Picture')).toBeVisible()
 

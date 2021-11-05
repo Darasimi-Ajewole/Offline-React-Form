@@ -58,9 +58,9 @@
     ]
   },
   "devDependencies": {
-    "remote-redux-devtools": "^0.5.16",
-    "sass": "^1.42.1",
     "@testing-library/jest-dom": "5.14.1",
-    "@testing-library/react": "11.2.7"
+    "@testing-library/react": "11.2.7",
+    "remote-redux-devtools": "^0.5.16",
+    "sass": "^1.42.1"
   }
 }
