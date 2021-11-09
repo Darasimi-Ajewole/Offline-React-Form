@@ -57,11 +57,11 @@ describe('Actions of account form', () => {
   });
 
 
-  it('Checks if Account form has modified value', async () => {
+  test('Checks if Account form has modified value', async () => {
     expect(screen.getByRole('form')).toHaveFormValues(expectedVal)
   })
 
-  it('Checks if form response is recorded and submitted', async () => {
+  test('Checks if form response is recorded and submitted', async () => {
     const signUpButton = screen.getByText('Sign Up')
     submitResponseAction.mockReturnValue({ type: 'TEST ACTION' })
     const latestResponse = getResponse(store.getState(), newResponseId);
