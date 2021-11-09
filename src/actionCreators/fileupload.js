@@ -2,6 +2,7 @@ import localforage from 'localforage';
 import uploadFile from '../utils/upload';
 import { v4 as uuidv4 } from 'uuid';
 import { CREATE_FILE, UPDATE_FILE } from '../actions';
+import { getFile } from "../model/fileupload";
 
 export const createFileUploadAction = (fileBlob, responseId) => async (dispatch, getState) => {
   const fileId = uuidv4()
@@ -48,9 +49,11 @@ export const uploadFileAction = (fileId, fileBlob) => async (dispatch) => {
   })
 }
 
-export const uploadPendingFileAction = (displayPic) => async (dispatch) => {
-  const uploaded = Boolean(displayPic.uploadData)
+export const uploadPendingFileAction = (fileId) => async (dispatch, getState) => {
+  const file = getFile(getState(), fileId)
+  const uploaded = Boolean(file.uploadData)
   if (uploaded) return
-  const displayPicBlob = await localforage.getItem(displayPic.id)
-  await dispatch(uploadFileAction(displayPic.id, displayPicBlob))
+  const fileBlob = await localforage.getItem(file.id)
+  await dispatch(uploadFileAction(file.id, fileBlob))
+  localforage.removeItem(file.id)
 }

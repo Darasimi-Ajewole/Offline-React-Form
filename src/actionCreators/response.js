@@ -1,17 +1,13 @@
 import submitRequest from "../utils/submit";
 import { uploadPendingFileAction } from "./fileupload";
 import { toast } from 'react-toastify';
-import localforage from 'localforage';
-import { getFile } from "../model/fileupload";
 import { getFailedResponses } from "../model/response";
 import { SUBMIT_RESPONSE, RESPONSE_SUBMITTED, FAILED_SUBMISSION } from "../actions";
 
 export const submitResponseAction = (response, online = true) => async (dispatch, getState) => {
   const customRequest = async ({ url, json }) => {
     if (response.displayPic) {
-      const displayPic = getFile(getState(), response.displayPic)
-      await dispatch(uploadPendingFileAction(displayPic))
-      localforage.removeItem(displayPic.id)
+      await dispatch(uploadPendingFileAction(response.displayPic))
     }
     return await submitRequest({ url, json })
   }
