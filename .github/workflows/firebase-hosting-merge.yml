@@ -11,7 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn && yarn build
+      - name: Install project dependencies
+        run: |
+          yarn
+
+      - name: Run test
+        env:
+          CI: true
+        run: |
+          yarn test
+
+      - name: Build Assets
+        run: |
+          yarn build
+      
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
