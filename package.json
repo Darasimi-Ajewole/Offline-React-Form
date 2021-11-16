@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "@redux-offline/redux-offline": "^2.6.0",
-    "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.4",
-    "bootstrap": "^5.1.1",
     "classnames": "^2.3.1",
     "localforage": "^1.10.0",
     "material-design-iconic-font": "^2.2.0",
@@ -60,6 +58,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "11.2.7",
+    "@testing-library/user-event": "^12.1.10",
     "redux-mock-store": "^1.5.4",
     "remote-redux-devtools": "^0.5.16",
     "sass": "^1.42.1"
