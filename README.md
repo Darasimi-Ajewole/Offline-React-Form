@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[<video src="./public/offlineReactForm.mp4"/>](https://offline-react-form.web.app)
+<video src="./public/offlineReactForm.mp4" width=180 />
 
 [View it live here](https://offline-react-form.web.app)
 
