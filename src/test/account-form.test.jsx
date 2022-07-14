@@ -5,7 +5,7 @@ import { render, isSuperObject } from './test-utils';
 import { createTestStore } from '../store';
 import AccountForm, { newResponseId } from '../components/account-form';
 import { submitResponseAction } from '../actionCreators/response';
-import { getResponse } from '../model/response';
+import { getResponse } from '../model/response-utils';
 import { CREATE_RESPONSE, UPDATE_RESPONSE } from '../actions';
 
 jest.mock('../actionCreators/response', () => {
