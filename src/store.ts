@@ -1,6 +1,9 @@
 import { createStore, compose, combineReducers, applyMiddleware } from "redux";
-import { createReducer } from "redux-orm";
+import { createReducer, OrmState } from "redux-orm";
 import orm from "./model";
+import { FileModel } from "./model/fileupload";
+import { ResponseModel } from "./model/response";
+
 import thunk from "redux-thunk";
 import { offlineMiddleware } from "./offline";
 
@@ -27,3 +30,11 @@ export const createTestStore = () => {
   return createStore(rootReducer, undefined, compose(...middleware));
 };
 export default store;
+
+const models = { ResponseModel, FileModel };
+type ModelSchema = typeof models;
+type ModelState = OrmState<ModelSchema>;
+interface OfflineState {
+  offline: { online: boolean };
+}
+export type RootState = OfflineState & ModelState;
