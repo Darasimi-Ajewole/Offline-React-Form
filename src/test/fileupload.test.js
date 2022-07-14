@@ -6,7 +6,7 @@ import {
 } from '../actionCreators/fileupload';
 import { UPDATE_FILE, CREATE_FILE } from '../actions';
 import uploadFile from '../utils/upload';
-import { getFile } from '../model/fileupload';
+import { getFile } from '../model/fileupload-utils';
 import localforage from 'localforage';
 
 const mockStore = configureMockStore([thunk])
@@ -18,7 +18,7 @@ jest.mock('../utils/upload', () => {
   };
 });
 
-jest.mock('../model/fileupload', () => {
+jest.mock('../model/fileupload-utils', () => {
   return {
     __esModule: true,
     getFile: jest.fn(),

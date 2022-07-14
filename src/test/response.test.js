@@ -1,13 +1,13 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { retryFailedResponses, submitResponseAction } from '../actionCreators/response';
-import { getFailedResponses } from '../model/response';
+import { getFailedResponses } from '../model/response-utils';
 import { toast } from 'react-toastify';
 import { uploadPendingFileAction } from '../actionCreators/fileupload';
 import submitRequest from '../utils/submit';
 
-jest.mock('../model/response', () => {
-  const originalModule = jest.requireActual('../model/response');
+jest.mock('../model/response-utils', () => {
+  const originalModule = jest.requireActual('../model/response-utils');
   return {
     __esModule: true,
     ...originalModule,

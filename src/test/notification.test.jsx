@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import { render } from './test-utils';
 import NotificationPanel from '../components/notification';
-import { getPendingResponseCount } from '../model/response';
+import { getPendingResponseCount } from '../model/response-utils';
 import { retryFailedResponses } from '../actionCreators/response';
 import { CREATE_RESPONSE, RESPONSE_SUBMITTED } from "../actions";
 import { createTestStore } from '../store';
