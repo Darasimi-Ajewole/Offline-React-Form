@@ -128,7 +128,7 @@ const FormUI = ({ response, handleChange, handleSubmit }: FormUIProps) => (
         </ul>
       </div>
       <div id="disclaimer">
-        DISCLAIMER: This is an hobby project, Don't submit any sensitive
+        DISCLAIMER: This is a hobby project, Don't submit any sensitive
         information on this form
       </div>
     </div>
